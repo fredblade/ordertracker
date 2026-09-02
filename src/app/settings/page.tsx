@@ -72,6 +72,8 @@ export default function SettingsPage() {
     if (providerInput === 'gmail') {
       setImapHost('imap.gmail.com');
       setImapPort('993');
+    } else if (providerInput === 'mock') {
+      setEmailInput((prev) => prev || 'demo@ordertracker.local');
     }
   }, [providerInput]);
 
@@ -79,11 +81,13 @@ export default function SettingsPage() {
     e.preventDefault();
     if (!emailInput.trim()) return;
 
-    const credentials: any = {
-      host: imapHost,
-      port: parseInt(imapPort, 10) || 993,
-      password: imapPassword
-    };
+    const credentials: any = providerInput === 'mock'
+      ? { speed: 1 }
+      : {
+          host: imapHost,
+          port: parseInt(imapPort, 10) || 993,
+          password: imapPassword
+        };
 
     try {
       const res = await fetch('/api/accounts', {
@@ -224,6 +228,7 @@ export default function SettingsPage() {
                     <SelectContent>
                       <SelectItem value="gmail">Gmail Account (via IMAP)</SelectItem>
                       <SelectItem value="imap">Custom IMAP Email Account</SelectItem>
+                      <SelectItem value="mock">Mock / Demo Account (fake orders)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -234,6 +239,13 @@ export default function SettingsPage() {
                   </div>
                 )}
 
+                {providerInput === 'mock' && (
+                  <div className="p-3.5 bg-primary/5 border border-primary/20 rounded-lg text-xs leading-normal text-muted-foreground">
+                    <strong className="text-foreground">Demo Mode:</strong> No real mailbox is contacted. Syncs generate fake retailer orders so you can explore the dashboard.
+                  </div>
+                )}
+
+                {providerInput !== 'mock' && (
                 <div className="flex flex-col gap-4 p-4 bg-accent/5 rounded-lg border border-border">
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="imapHost" className="text-xs font-bold text-muted-foreground uppercase tracking-wider">IMAP Host Address</Label>
@@ -272,6 +284,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
                 </div>
+                )}
 
                 <Button type="submit" size="lg" className="w-full justify-center">
                   Create Integration

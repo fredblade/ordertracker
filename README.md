@@ -2,6 +2,8 @@
 
 A self-hosted dashboard that turns retailer order emails into a live order tracker. It connects to your inbox over IMAP, parses order confirmation / shipping / delivery emails, and gives you a dashboard with order status, a delivery calendar, analytics, an inventory & P&L log, and optional Discord notifications.
 
+![Dashboard](screenshots/dashboard.png)
+
 ## Features
 
 - **Email-driven order tracking**: connects to any IMAP inbox (Gmail via App Password supported) and parses order emails automatically
@@ -14,6 +16,24 @@ A self-hosted dashboard that turns retailer order emails into a live order track
 - **Background sync**: [Inngest](https://www.inngest.com/) workflows poll your inboxes on a schedule
 - **Mock inbox**: a built-in mock email provider so you can try everything without connecting a real inbox
 - **Private by default**: Google sign-in (via Supabase Auth) restricted to an allowlist; add one or several Google accounts via `ALLOWED_EMAILS`
+
+## Demo
+
+### Delivery calendar
+
+![Delivery calendar](screenshots/calendar.png)
+
+### Analytics
+
+![Analytics](screenshots/analytics.png)
+
+### Settings & integrations
+
+![Settings](screenshots/settings.png)
+
+### Discord notifications
+
+![Discord webhook notifications](screenshots/discord_webhook.png)
 
 ## Tech stack
 
